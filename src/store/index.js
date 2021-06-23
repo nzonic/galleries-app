@@ -1,7 +1,9 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import auth from './auth'
-Vue.use(Vuex)
+import Vue from 'vue';
+import Vuex from 'vuex';
+import auth from './auth';
+import galleries from './galleries';
+
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -11,6 +13,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    auth
+    auth,
+    galleries
   }
 })

@@ -12,7 +12,7 @@
         </li> -->
       </ul>
       <span v-if="isAuthenticated">
-        <button class="btn btn-outline-danger" @click="logout">Logout</button>
+        <button class="btn btn-outline-danger" @click="handleLogout">Logout</button>
       </span>
       <span v-else>
         <router-link class="btn btn-outline-primary" to="/login">Login</router-link>
@@ -29,7 +29,15 @@ export default {
     ...mapGetters('auth', ['isAuthenticated'])
   },
   methods: {
-    ...mapActions('auth', ['logout'])
+    ...mapActions('auth', ['logout']),
+    async handleLogout() {
+      try {
+        this.logout();
+        this.$router.push('/');
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 }
 </script>

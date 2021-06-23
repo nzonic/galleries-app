@@ -27,9 +27,16 @@ export const actions = {
     }
   },
   async logout(store) {
-    await authService.logout();
-    store.commit('setToken', null);
-    store.commit('setActiveUser', {});
-    localStorage.removeItem('token');
+    try {
+      await authService.logout();
+      store.commit('setToken', null);
+      store.commit('setActiveUser', {});
+      localStorage.removeItem('token');
+    } catch (error) {
+      // store.commit('setToken', null);
+      // store.commit('setActiveUser', {});
+      // localStorage.removeItem('token');
+      console.log(error);
+    }
   },
 };

@@ -17,7 +17,7 @@ class BaseService {
     this.http.interceptors.response.use(async function(response) {
       const token = JSON.parse(localStorage.getItem('token'));
       if (token && response.status == 401) {
-        const { data } = await this.http.post('auth/refresh');
+        const { data } = await this.http.post('/refresh');
         localStorage.setItem('token', data.token);
       }
       return response;
