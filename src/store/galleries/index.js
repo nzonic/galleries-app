@@ -5,7 +5,9 @@ import { mutations } from './mutations';
 const store = {
     namespaced: true,
     state: {
-      galleryList: []
+      galleryPage: {},
+      loading: true,
+      searchTerm: ''
     },
     actions,
     mutations,

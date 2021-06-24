@@ -1,16 +1,15 @@
 <template>
   <div class="home">
     <h1 class="display-1"> Galleries App  </h1>
-    <ul v-if="galleries.length">
-      <li v-for="gallery in galleries" :key="gallery.id">
-          {{gallery.name}}
-      </li>
-    </ul>
+    <div v-if="!isLoading" class="list">
+      <gallery-card v-for="gallery in galleryPage.data" :key="gallery.id" :gallery="gallery">
+      </gallery-card>
+    </div>
     <h2 v-else>
-      No Galleries! :(
+      Loading... Please Wait :)
     </h2>
 
-    <button class="btn btn-primary" v-if="!loadedAll" @click="load10">
+    <button class="btn btn-primary" v-if="currentPage < lastPage" @click="loadMore">
       Load 10 more
     </button>
   </div>
@@ -18,37 +17,35 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
+import GalleryCard from '../components/GalleryCard.vue';
 export default {
   name: 'Home',
   components: {
-  },
-  data() {
-    return {
-      galleries: [],
-      loaded: 0,
-      loadedAll: false
-    }
+    GalleryCard
   },
   computed: {
-    ...mapGetters('galleries', ['fullList'])
+    ...mapGetters('galleries', ['galleryPage', 'isLoading', 'currentPage', 'lastPage']),
+    nextPage() {
+      return this.currentPage + 1;
+    }
   },
   methods: {
-    ...mapActions('galleries', ['getAll']),
-    load10() {
-      let latest10 = this.fullList.slice(this.loaded, this.loaded + 10);
-      latest10.forEach(element => {
-        this.galleries.push(element);
-      });
-      this.loaded += 9;
-      if (this.loaded >= this.fullList.length) {
-        this.loadedAll = true
-      }
+    ...mapActions('galleries', {loadMorePages: 'loadMore', getGalleries: 'getGalleries' }),
+    async loadMore() {
+      await this.loadMorePages( 
+        this.nextPage
+        );
     }
   },
   async created() {
-    this.getAll();
-    this.load10();
+    this.getGalleries(1);
   }
 }
 </script>
+
+<style scoped>
+#list {
+  display: flex;
+  flex-direction: row;
+}
+</style>

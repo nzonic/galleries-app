@@ -13,6 +13,10 @@
       </ul>
       <span v-if="isAuthenticated">
         <button class="btn btn-outline-danger" @click="handleLogout">Logout</button>
+        <b-nav-form @submit.stop.prevent="search">
+            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+        </b-nav-form>
       </span>
       <span v-else>
         <router-link class="btn btn-outline-primary" to="/login">Login</router-link>
@@ -23,13 +27,15 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   computed: {
     ...mapGetters('auth', ['isAuthenticated'])
   },
   methods: {
     ...mapActions('auth', ['logout']),
+    ...mapActions('galleries', ['getGalleries']),
+    ...mapMutations('galleries', ['setSearchTerm']),
     async handleLogout() {
       try {
         this.logout();
@@ -37,6 +43,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    search(event) {
+      this.setSearchTerm(event.target[0].value);
+      this.getGalleries(1)
     }
   }
 }

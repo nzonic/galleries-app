@@ -1,20 +1,38 @@
 <template>
-  <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="..." alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
+  <b-card
+    :title="gallery.name"
+    :img-src="gallery.images[0].url"
+    img-alt="Image"
+    img-top
+    tag="article"
+    style="
+      max-width: 20rem;
+      display: inline-block;"
+    class="mb-2"
+  >
+    <b-card-text>
+      {{ gallery.user.firstName }} {{ gallery.user.lastName }}
+      <br>
+      {{ gallery.created_at | formatDate}}
+    </b-card-text>
+
+    <b-button href="#" variant="primary">Open Gallery</b-button>
+  </b-card>
 </template>
 
 <script>
+import dateMixins from '../mixins/DateMixins.js';
 export default {
-
+  name: 'GalleryCard',
+  props: {
+    gallery: Object
+  },
+  mixins: [dateMixins]
 }
 </script>
 
 <style>
-
+article {
+  
+}
 </style>
