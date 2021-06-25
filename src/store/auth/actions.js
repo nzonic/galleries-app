@@ -1,4 +1,4 @@
-  
+
 import authService from '../../services/AuthService';
 
 export const actions = {
@@ -33,9 +33,11 @@ export const actions = {
       store.commit('setActiveUser', {});
       localStorage.removeItem('token');
     } catch (error) {
-      // store.commit('setToken', null);
-      // store.commit('setActiveUser', {});
-      // localStorage.removeItem('token');
+      if (error.status === 401) {
+        store.commit('setToken', null);
+        store.commit('setActiveUser', {});
+        localStorage.removeItem('token');
+      }
       console.log(error);
     }
   },

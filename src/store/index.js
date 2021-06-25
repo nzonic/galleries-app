@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import auth from './auth';
 import galleries from './galleries';
+import author from './author';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   },
   modules: {
     auth,
-    galleries
+    galleries,
+    author
   }
 })

@@ -15,8 +15,9 @@ class AuthService extends BaseService {
     return this.http.post('/logout');
   }
 
-  async getMe() {
+  async getMyProfile() {
     const { data } = await this.http.get('/me');
+    console.log(data);
     return data;
   }
 }

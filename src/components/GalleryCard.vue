@@ -16,7 +16,7 @@
       {{ gallery.created_at | formatDate}}
     </b-card-text>
 
-    <b-button href="#" variant="primary">Open Gallery</b-button>
+    <router-link class="btn btn-primary" :to="`/galleries/${gallery.id}`">Open Gallery</router-link>
   </b-card>
 </template>
 
@@ -30,9 +30,3 @@ export default {
   mixins: [dateMixins]
 }
 </script>
-
-<style>
-article {
-  
-}
-</style>

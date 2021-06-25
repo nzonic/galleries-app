@@ -10,7 +10,7 @@ export const mutations = {
     isLoading(state) {
       state.loading = true;
     },
-    isNotLoading(state) {
+    isLoaded(state) {
       state.loading = false;
     },
     setSearchTerm(state, payload) {
