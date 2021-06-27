@@ -49,6 +49,20 @@ const routes = [
     component: CreateGallery,
     meta: { authRequired: true },
   },
+  {
+    path: "/edit-gallery/:id",
+    name: "EditGallery",
+    component: CreateGallery,
+    meta: { authRequired: true},
+    props: true
+  },
+  {
+    path: "/my-galleries",
+    name: "MyGalleries",
+    component: AuthorPage,
+    meta: { authRequired: true},
+    props: true
+  }
 ];
 
 const router = new VueRouter({
@@ -57,9 +71,8 @@ const router = new VueRouter({
   routes,
 });
 router.beforeEach(authGuard);
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   store.commit("galleries/isLoading");
-  store.dispatch("auth/getActiveUser");
   next();
 });
 export default router;

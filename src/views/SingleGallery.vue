@@ -17,7 +17,22 @@
       <p>
         {{ gallery.description }}
       </p>
-
+      <div v-if="gallery.user.id === activeUser.id">
+        <b-modal
+          id="modal-1"
+          :ref="`modal-${gallery.id}`"
+          title="Delete Gallery?"
+          @ok="handleOk"
+        >
+        <p>
+          Are you sure you want to delete your Gallery?
+          <br>
+          You will not be able to undo this action.
+        </p>
+        </b-modal>
+        <button type="button" class="btn btn-danger" @click="onDelete">Delete</button>
+        <router-link class="btn btn-primary" :to="`/edit-gallery/${gallery.id}`">Edit</router-link>
+      </div>
       <div>
         <b-carousel
           id="carousel-1"
@@ -32,6 +47,8 @@
           @sliding-start="onSlideStart"
           @sliding-end="onSlideEnd"
         >
+
+
           <b-carousel-slide v-for="image in gallery.images" :key="image.id">
             <template #img>
               <a :href="image.url" target="_blank">
@@ -47,6 +64,9 @@
           </b-carousel-slide>
         </b-carousel>
       </div>
+      <div>
+        <comments-component :comments="gallery.comments" :activeUser="activeUser" :galleryId="gallery.id"></comments-component>
+      </div>
     </div>
     <div v-else>
       <h2>
@@ -59,10 +79,11 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import dateMixins from "../mixins/DateMixins";
-
+import CommentsComponent from "../components/Comments.vue";
 export default {
   name: "SingleGallery",
   computed: {
+    ...mapGetters("auth", ['activeUser']),
     ...mapGetters("galleries", {
       gallery: "galleryPage",
       isLoading: "isLoading",
@@ -75,19 +96,35 @@ export default {
     };
   },
   methods: {
-    ...mapActions("galleries", ["showGallery"]),
+    ...mapActions("galleries", ["showGallery", "deleteGallery"]),
     onSlideStart() {
       this.sliding = true;
     },
     onSlideEnd() {
       this.sliding = false;
     },
+    async onDelete() {
+      this.$bvModal.show('modal-1')
+    },
+    async handleOk() {
+      try {
+        let data = await this.deleteGallery(this.id);
+        console.log(data);
+        this.$router.push(`/authors/${this.activeUser.id}`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
   },
   props: ["id"],
   created() {
     this.showGallery(this.id);
   },
   mixins: [dateMixins],
+  components: {
+    CommentsComponent
+  }
 };
 </script>
 

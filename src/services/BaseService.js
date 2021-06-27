@@ -18,7 +18,7 @@ class BaseService {
       const token = JSON.parse(localStorage.getItem('token'));
       if (token && response.status == 401) {
         const { data } = await this.http.post('/refresh');
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.access_token);
       }
       return response;
     }, async function(error) {

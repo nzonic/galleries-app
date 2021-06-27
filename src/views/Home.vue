@@ -2,11 +2,18 @@
   <div class="home">
     <h1 class="display-1"> Galleries App  </h1>
     <div v-if="!isLoading" class="list">
-      <gallery-card v-for="gallery in galleryPage.data" :key="gallery.id" :gallery="gallery">
-      </gallery-card>
+      <div v-if="galleryPage.data.length">
+        <gallery-card v-for="gallery in galleryPage.data" :key="gallery.id" :gallery="gallery">
+        </gallery-card>
+      </div>
+      <div v-else>
+        <h2 class="display-2">
+            Sorry, but there are no galleries! 
+        </h2>
+      </div>
     </div>
     <h2 v-else>
-      Loading... Please Wait :)
+      Loading... Please Wait 
     </h2>
 
     <button class="btn btn-primary" v-if="currentPage < lastPage" @click="loadMore">

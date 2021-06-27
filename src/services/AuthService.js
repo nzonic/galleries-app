@@ -11,15 +11,15 @@ class AuthService extends BaseService {
     return data;
   }
 
-  logout() {
-    return this.http.post('/logout');
+  async logout() {
+    return await this.http.post('/logout');
   }
 
   async getMyProfile() {
     const { data } = await this.http.get('/me');
-    console.log(data);
     return data;
   }
+
 }
 
 const authService = new AuthService();

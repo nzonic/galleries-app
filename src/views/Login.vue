@@ -25,7 +25,7 @@
         ></b-form-input>
       </b-form-group>
           <b-alert v-model="failedLogin" variant="danger" dismissible>
-          Something Went Wrong
+              Please Check your Credentials and try again.
           </b-alert>
       <b-button type="submit" variant="primary">Login</b-button>
 

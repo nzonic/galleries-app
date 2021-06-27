@@ -23,6 +23,7 @@ export const actions = {
             const data = await galleriesService.getGallery(id);
             store.commit('setGalleryPage', data);
             store.commit('isLoaded');
+            return data;
         } catch (error) {
             console.log(error);
         }
@@ -32,6 +33,7 @@ export const actions = {
             const data  = await galleriesService.getGalleries(page, store.state.searchTerm, author);
             store.commit('setGalleryPage', data);
             store.commit('isLoaded');
+            return data;
         } catch (error) {
             console.log(error);
         }
@@ -43,5 +45,25 @@ export const actions = {
         } catch (error) {
             console.log(error);
         }
-    }
+    },
+    async createGallery(store, gallery) {
+        
+        const data = await galleriesService.create(gallery);
+        return data;
+    },
+    finishLoading(store) {
+        store.commit('isLoaded');
+    },
+    async editGallery(store, gallery) {
+        try {
+            const data = await galleriesService.edit(gallery);
+            return data;
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    async deleteGallery(store, galleryId) {
+        const data = await galleriesService.delete(galleryId);
+        return data;
+    } 
 }

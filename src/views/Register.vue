@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit.stop.prevent="onSubmit" @reset="onReset" v-if="show">
+    <b-form @submit.stop.prevent="onSubmit"  v-if="show">
       <b-form-group
         id="input-group-1"
         label="Email address:"
@@ -90,7 +90,6 @@
       </b-form-checkbox>
 
       <b-button type="submit" variant="primary">Register</b-button>
-      <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
     </b-form>
   </div>
 </template>
@@ -136,19 +135,6 @@ import { mapActions } from 'vuex'
           });
           console.log(error.data.errors);
         }
-      },
-      onReset() {
-        this.form.email = ''
-        this.form.firstName = ''
-        this.form.lastName = ''
-        this.form.password = ''
-        this.form.password_confirmation = ''
-        this.status = 'not_accepted'
-
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
       },
       resetState() {
           this.formState.password = null;

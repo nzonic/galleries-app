@@ -3,7 +3,6 @@ export const mutations = {
       state.galleryPage = pageInfo;
     },
     paginate(state, pageInfo) {
-      console.log(pageInfo);
       pageInfo.data = [...state.galleryPage.data, ...pageInfo.data];
       state.galleryPage = pageInfo;
     },
@@ -15,5 +14,11 @@ export const mutations = {
     },
     setSearchTerm(state, payload) {
       state.searchTerm = payload;
+    },
+    pushComment(state, payload) {
+      state.galleryPage.comments.push(payload);
+    },
+    removeComment(state, commentId) {
+      state.galleryPage.comments = state.galleryPage.comments.filter((el) => el.id !== commentId);
     }
   };
